@@ -1,0 +1,48 @@
+body{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: inherit
+}
+
+.comment{
+    max-width: 400px;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 3px;
+    padding: 10px;
+    margin-left: 10px;
+    background-color: white;
+}
+
+.comments{
+    margin-left: 20px;
+    border: 1px solid rgb(165, 165, 165);
+    border-radius: 3px;
+    background-color: rgb(187, 187, 187);
+    max-width: 300px;
+    padding: 10px 10px 5px 10px;
+    margin: 10px;
+}
+
+.form{
+    padding: 0 30px;
+}
+
+.post{
+    margin: 30px;
+    background-color: rgb(185, 218, 230);
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 3px;
+    padding: 15px;
+}
+
+.red{
+    color: red;
+}
+
+.thumb{
+    max-width: 25px;
+}
+
+#name{
+    max-width: 200px;
+}

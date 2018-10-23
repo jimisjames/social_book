@@ -1,0 +1,16 @@
+h1{
+    max-width: 1000px;
+    margin: auto;
+}
+
+body{
+    max-width: 1000px;
+    padding: 0px 30px;
+    margin: 5px auto;
+    background-color: rgb(221, 221, 221);
+}
+
+#top{
+    background-color: rgb(185, 218, 230);
+    padding: 10px;
+}

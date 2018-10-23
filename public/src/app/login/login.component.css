@@ -1,0 +1,13 @@
+body{
+    background-color: inherit;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+#home{
+    margin-top: 5px;
+}
+
+.red{
+    color: red;
+}
