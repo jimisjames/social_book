@@ -1,7 +1,7 @@
 body{
     padding-top: 15px;
     padding-bottom: 55px;
-    background-color: inherit
+    background-color: rgb(221, 221, 221);
 }
 
 .comment{
@@ -57,18 +57,19 @@ body{
     bottom: 0px;
     height: 40px;
     width: 100%;
-    border: 1px solid rgb(180, 180, 180);
+    border: 1px solid rgb(133, 133, 133);
     padding: 0px 25px;
 }
 
 .chat{
     background-color: rgb(234, 242, 245);
-    max-width: 17%;
     border-left: 1px solid rgb(180, 180, 180);
     border-right: 1px solid rgb(180, 180, 180);
     height: 40px;
     padding: 5px 10px;
+    max-width: 17%;
     cursor: pointer;
+    margin-left: 3px;
 }
 
 .chat p{
@@ -87,8 +88,8 @@ body{
     background-color: rgb(234, 242, 245);
     border: 1px solid rgb(180, 180, 180);
     border-radius: 2px;
-    max-width: 250px;
-    height: 300px;
+    max-width: 300px;
+    height: 400px;
     margin-right: 0px;
     padding: 5px 10px;
     pointer-events: all;
@@ -99,15 +100,54 @@ body{
     cursor: pointer;
 }
 
+.chatBox input{
+    margin: 5px 2px 0 0;
+}
+
+.clean{
+    margin: 8px 0px 0px 0px;
+    padding: 0px;
+}
+
 .text{
     background-color: rgb(253, 254, 255);
     border: 1px solid rgba(180, 180, 180, 0.534);
     border-radius: 3px;
     padding: 5px 10px;
     overflow: scroll;
-    max-height: 250px;
+    height: 310px;
 }
 
 .text p{
     margin-bottom: 3px;
+}
+
+.sideBar{
+    position: fixed;
+    right: 50%;
+    margin-right: -715px;
+    top: 73px;
+    background-color: rgb(221, 221, 221);
+    padding: 10px 15px 10px 15px;
+    border-radius: 2px;
+    height: 300px;
+    width: 208px;
+}
+
+#users{
+    background-color: white;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    max-height: 234px;
+    overflow: scroll;
+}
+
+#users p{
+    margin: 0;
+    cursor: pointer;
+}
+
+#users p:hover{
+    color: rgb(0, 0, 202);
 }

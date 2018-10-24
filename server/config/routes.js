@@ -6,8 +6,24 @@ module.exports = function (app) {
         posts.all(req, res)
     })
 
+    app.get('/all/users/:id', function (req, res) {
+        posts.allUsers(req, res, req.params.id)
+    })
+
+    app.get('/all/chats/:id', function (req, res) {
+        posts.allChats(req, res, req.params.id)
+    })
+
     app.post('/', function (req, res) {
         posts.new(req, res)
+    })
+
+    app.post('/message', function (req, res) {
+        posts.newMessage(req, res)
+    })
+
+    app.post('/chat', function (req, res) {
+        posts.newChat(req, res)
     })
 
     app.post('/comment', function (req, res) {
@@ -29,8 +45,13 @@ module.exports = function (app) {
     app.delete('/:id', function (req, res) {
         posts.deletePost(req, res, req.params.id)
     })
+
     app.delete('/comment/:id', function (req, res) {
         posts.deleteComment(req, res, req.params.id)
+    })
+
+    app.delete('/chat/:id', function (req, res) {
+        posts.deleteChat(req, res, req.params.id)
     })
 
     /* app.get('/one/:id', function (req, res) {

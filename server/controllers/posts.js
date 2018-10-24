@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 Post = mongoose.model('Post')
 Comment = mongoose.model('Comment')
 User = mongoose.model('User')
+Chat = mongoose.model('Chat')
 
 const bcrypt = require('bcryptjs');
 
@@ -20,8 +21,32 @@ module.exports = {
         })
     },
 
+    allUsers: function(req, res, id) {
+        User.find({_id: {$ne: id}}, function(err, data){ /////////// find where id DOESNT MATCH
+            if(err){
+                console.log("error")
+                res.json({message: "Error", error: err});
+            } else {
+                res.json({message: "Success", data: data});
+            }
+        })
+    },
+
+    allChats: function(req, res, id) {
+        console.log(id)
+        Chat.find({userIds: id}, function(err, data){
+            if(err){
+                console.log("error")
+                res.json({message: "Error", error: err});
+            } else {
+                console.log(data)
+                res.json({message: "Success", data: data});
+            }
+        })
+    },
+
     new: function(req, res) {
-        console.log(req.body)
+        //console.log(req.body)
         var post = new Post(req.body);
         post.save(function (err) {
             if (err) {
@@ -34,10 +59,40 @@ module.exports = {
         })
     },
 
+    newChat: function(req, res) {
+        //console.log(req.body)
+
+        Chat.create({ userIds: [req.body.idOne, req.body.idTwo], userNames: [req.body.nameOne, req.body.nameTwo]}, function (err,data) {
+            if (err) {
+                console.log('something went wrong');
+                res.json({message: "Error", error: err});
+            } else {
+
+                console.log(data);
+                res.json({message: "Success", data: data});
+            }
+        })
+    },
+
+    newMessage: function(req, res) {
+        console.log(req.body)
+
+        Chat.findByIdAndUpdate(req.body.chatId, {$push:{messages:{message: req.body.newMessage}}}, function (err,data) {
+            if (err) {
+                console.log('something went wrong');
+                res.json({message: "Error", error: err});
+            } else {
+
+                console.log(data);
+                res.json({message: "Success", data: data});
+            }
+        })
+    },
+
     newComment: function(req, res) {
         //console.log(req.body)
 
-        Comment.create({name: req.body.name, comment: req.body.comment}, function (err, data) {
+        Comment.create({name: req.body.name, comment: req.body.comment, userId: req.body.userId}, function (err, data) {
             if (err) {
                 console.log('something went wrong');
                 res.json({message: "Error", error: err});
@@ -151,13 +206,25 @@ module.exports = {
     },
 
     deleteComment: function(req, res, id) {
-        console.log(id)
+        //console.log(id)
         Post.updateOne({ comments: {$elemMatch: { _id: id }}}, { $pull: {comments: {_id: id} }}, function (err, data) {
             if (err) {
                 //console.log(err)
                 res.json({message: "Error", error: err});
             } else {
                 res.json({message: "Success", data: data});
+            }
+        })
+    },
+
+    deleteChat: function(req, res, id) {
+        //console.log(id)
+        Chat.deleteOne({_id: id}, function (err) {
+            if (err) {
+                //console.log(err)
+                res.json({message: "Error", error: err});
+            } else {
+                res.json({message: "Success"});
             }
         })
     },

@@ -22,8 +22,16 @@ var UserSchema = new mongoose.Schema({
     password: {type: String, required: [true, "Password is required"], minlength: [3, "Password has a required length of 3"] },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 
-
+var ChatSchema = new mongoose.Schema({
+    userIds: [String],
+    userNames: [String],
+    messages: [
+        {message: {type: String, required: true}},
+        {userName: {type: String, required: true}}
+    ]
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 
 mongoose.model('Post', PostSchema);
 mongoose.model('Comment', CommentSchema);
 mongoose.model('User', UserSchema);
+mongoose.model('Chat', ChatSchema);

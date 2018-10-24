@@ -12,6 +12,10 @@ export class HomeComponent implements OnInit {
 
   user = this._httpService.user
 
+  users = null;
+
+  chats = null;
+
   post = {
     post: "",
     name: "",
@@ -21,31 +25,122 @@ export class HomeComponent implements OnInit {
   posts = []
 
   newComment = {
+    userId: "",
     post_id: "",
     comment: "",
     name: ""
   }
+
+  chatRoom = null;
+
   commentFlash = []
   postFlash = []
   
-  newMessage = null
+  newMessage = ""
 
   ngOnInit() {
     this.getPosts()
+    if(this.user){
+      this.getUsers(this.user['_id'])
+      this.getChats(this.user['_id'])
+    }
   }
 
-  openChat(){
-    this.newMessage = {
-      message: ""
+  sendMessage(){
+    let observable = this._httpService.sendMessage({newMessage: (this.newMessage+" - "+this.user['name']), chatId: this.chatRoom['id']})
+    observable.subscribe(data => {
+      //console.log(data, "messssssssssssssssssssage")
+      if(data["message"] == "Success"){
+        this.getChats(this.user['_id'])
+        this.openChat(data['data']['_id'])
+        this.newMessage = ""
+        this.chatRoom = {
+          messages: data['data']['messages'],
+          names: data['data']['names'],
+          id: data['data']['_id']
+        }
+      }
+    })
+  }
+
+  getChats(id){
+    let observable = this._httpService.getChats(id)
+    observable.subscribe(data => {
+      //console.log(data)
+      if(data["message"] == "Success"){
+        this.chats = data["data"]
+        for(let chat of this.chats){
+          chat['names'] = []
+          for(let name of chat['userNames'])
+            if(name != this.user['name']){
+              chat['names'].push(name)
+          }
+        }
+      }
+    })
+  }
+
+  getUsers(id){
+    let observable = this._httpService.getUsers(id)
+    observable.subscribe(data => {
+      //console.log(data)
+      if(data["message"] == "Success"){
+        this.users = data["data"]
+      }
+    })
+  }
+
+  newChat(data){
+    let observable = this._httpService.newChat({idOne: data[0], idTwo: this.user["_id"], nameOne: data[1], nameTwo: this.user["name"]})
+    observable.subscribe(data => {
+      //console.log(data)
+      this.getChats(this.user['_id'])
+    })
+  }
+
+  openChat(id){
+    if(this.chatRoom){
+      if(this.chatRoom['id'] == id){
+        this.chatRoom = null
+      } else {
+        for(let chat of this.chats){
+          if(chat._id == id){
+            this.chatRoom = {
+              messages: chat.messages,
+              names: chat.names,
+              id: chat._id
+            }
+          }
+        }
+      }
+    } else {
+      for(let chat of this.chats){
+        if(chat._id == id){
+          this.chatRoom = {
+            messages: chat.messages,
+            names: chat.names,
+            id: chat._id
+          }
+        }
+      }
     }
   }
 
   minimise(){
-    this.newMessage = null
+    this.chatRoom = null
   }
 
   deleteChat(){
-
+    if(confirm("Are you sure you want to delete this conversation?")){
+      let observable = this._httpService.deleteChat(this.chatRoom["id"])
+      observable.subscribe(data => {
+        //console.log(data)
+        if(data["message"] == "Success"){
+          this.getChats(this.user["_id"])
+          this.chatRoom = null
+        }
+      })
+    }
   }
 
   likePost(id){
@@ -61,6 +156,7 @@ export class HomeComponent implements OnInit {
   logout(){
     this._httpService.logout()
     this.user = this._httpService.user
+    this.users = null;
   }
 
   newPost(){
@@ -99,6 +195,7 @@ export class HomeComponent implements OnInit {
 
   open(id){
     this.newComment = {
+      userId: "",
       post_id: id,
       comment: "",
       name: ""
@@ -106,13 +203,15 @@ export class HomeComponent implements OnInit {
   }
 
   comment(){
+    this.newComment.userId = this.user["_id"]
     this.newComment.name = this.user["name"]
     let observable = this._httpService.comment(this.newComment)
     observable.subscribe(data => {
-      //console.log(data)
+      console.log(data)
       if(data['message'] == "Success"){
         this.getPosts()
         this.newComment = {
+          userId: "",
           post_id: "",
           comment: "",
           name: ""

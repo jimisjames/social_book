@@ -12,6 +12,26 @@ export class HttpService {
 
   user: Object
 
+  deleteChat(id){
+    return this._http.delete("/chat/" +id)
+  }
+
+  sendMessage(data){
+    return this._http.post("/message", data)
+  }
+
+  getChats(id){
+    return this._http.get("/all/chats/"+id)
+  }
+
+  newChat(data){
+    return this._http.post("/chat", data)
+  }
+
+  getUsers(id){
+    return this._http.get("/all/users/"+id)
+  }
+
   newPost(data){
     return this._http.post('/', data)
   }

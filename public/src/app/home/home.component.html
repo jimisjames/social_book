@@ -40,7 +40,7 @@
           <h6>- {{comment.name}}</h6>
         </div>
         <div class="col">
-            <button class="btn btn-sm btn-warning" (click)="removeComment(comment._id)">Delete</button>
+            <button class="btn btn-sm btn-warning" *ngIf="user && (comment.userId == user._id || post.userId == user._id)" (click)="removeComment(comment._id)">Delete</button>
         </div>
       </div>
       <button class="btn btn-sm btn-primary" *ngIf="newComment.post_id != post._id && user" (click)="open(post._id)">Write Comment</button>
@@ -68,10 +68,10 @@
 
 <div class="chatRow row">
   <div class="col"></div>
-  <div *ngIf="newMessage" class="col chatBox">
+  <div *ngIf="chatRoom" class="col chatBox">
     <div class="row">
       <div class="col">
-        <h5>Jimmy</h5>
+        <h5><span *ngFor="let name of chatRoom.names">{{name}}</span></h5>
       </div>
       <div class="col-1">
         <img (click)="minimise()" src="assets/minus.png" alt="minus">
@@ -81,20 +81,37 @@
       </div>
     </div>
     <div id="text" class="text">
-      <p>yee - Jimmy</p>
-      <p>yeah? - Jim</p>
-      <p>yep! - Jimmy</p>
-      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>
-      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>
-      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>
+      <p *ngFor="let message of chatRoom.messages">{{message.message}}</p>
+    </div>
+    <div class="row">
+      <div class="col">
+        <input class="form-control" type="text" placeholder="Say Hi!" [(ngModel)]="newMessage">
+      </div>
+      <div class="col-3 clean">
+        <button class="btn btn-sm btn-primary" (click)="sendMessage()">Send</button>
+      </div>
     </div>
   </div>
 </div>
-<div id="lower">
+
+<div *ngIf="chats" id="lower">
   <div class="row">
     <div class="col"></div>
-    <div (click)="openChat()" class="col chat">
-      <p>Jimmy</p>
+    <div *ngFor="let chat of chats" class="col chat">
+      <div (click)="openChat(chat._id)">
+        <p>
+          <span *ngFor="let name of chat.names">{{name}} </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="users" class="sideBar">
+  <h3>Users</h3>
+  <div id="users">
+    <div *ngFor="let user of users">
+      <p (click)="newChat([user._id, user.name])">{{user.name}}</p>
     </div>
   </div>
 </div>
