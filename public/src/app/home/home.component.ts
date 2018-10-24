@@ -27,9 +27,25 @@ export class HomeComponent implements OnInit {
   }
   commentFlash = []
   postFlash = []
+  
+  newMessage = null
 
   ngOnInit() {
     this.getPosts()
+  }
+
+  openChat(){
+    this.newMessage = {
+      message: ""
+    }
+  }
+
+  minimise(){
+    this.newMessage = null
+  }
+
+  deleteChat(){
+
   }
 
   likePost(id){

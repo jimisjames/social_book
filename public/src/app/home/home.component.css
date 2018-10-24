@@ -1,6 +1,6 @@
 body{
     padding-top: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 55px;
     background-color: inherit
 }
 
@@ -48,4 +48,66 @@ body{
 
 .space {
     margin-left: 10px;
+}
+
+#lower{
+    background-color: rgb(185, 218, 230);
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 40px;
+    width: 100%;
+    border: 1px solid rgb(180, 180, 180);
+    padding: 0px 25px;
+}
+
+.chat{
+    background-color: rgb(234, 242, 245);
+    max-width: 17%;
+    border-left: 1px solid rgb(180, 180, 180);
+    border-right: 1px solid rgb(180, 180, 180);
+    height: 40px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.chat p{
+    margin-bottom: 0;
+}
+
+.chatRow{
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    bottom: 40px;
+    pointer-events: none;
+}
+
+.chatBox{
+    background-color: rgb(234, 242, 245);
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 2px;
+    max-width: 250px;
+    height: 300px;
+    margin-right: 0px;
+    padding: 5px 10px;
+    pointer-events: all;
+}
+
+.chatBox img{
+    max-width: 15px;
+    cursor: pointer;
+}
+
+.text{
+    background-color: rgb(253, 254, 255);
+    border: 1px solid rgba(180, 180, 180, 0.534);
+    border-radius: 3px;
+    padding: 5px 10px;
+    overflow: scroll;
+    max-height: 250px;
+}
+
+.text p{
+    margin-bottom: 3px;
 }

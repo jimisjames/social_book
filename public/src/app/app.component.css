@@ -6,7 +6,7 @@ h1{
 body{
     max-width: 1000px;
     padding: 0px 30px;
-    margin: 5px auto;
+    margin: 5px auto 0px;
     background-color: rgb(221, 221, 221);
 }
 

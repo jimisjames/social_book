@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
     private _httpService: HttpService,
     private _router: Router
   ) { }
+
+  @Output() aTaskEventEmitter = new EventEmitter();
 
   newUser = {
     name: "",
@@ -39,6 +41,7 @@ export class LoginComponent implements OnInit {
       observable.subscribe(data => {
         //console.log(data)
         if(data["message"] == "Success"){
+          this.aTaskEventEmitter.emit(data["data"]);
           this._router.navigate(['/']);
         } else {
           this.logFlash = []

@@ -74,7 +74,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "h1{\n    max-width: 1000px;\n    margin: auto;\n}\n\nbody{\n    max-width: 1000px;\n    padding: 0px 30px;\n    margin: 5px auto;\n    background-color: rgb(221, 221, 221);\n}\n\n#top{\n    background-color: rgb(185, 218, 230);\n    padding: 10px;\n}"
+module.exports = "h1{\n    max-width: 1000px;\n    margin: auto;\n}\n\nbody{\n    max-width: 1000px;\n    padding: 0px 30px;\n    margin: 5px auto 0px;\n    background-color: rgb(221, 221, 221);\n}\n\n#top{\n    background-color: rgb(185, 218, 230);\n    padding: 10px;\n}"
 
 /***/ }),
 
@@ -106,17 +106,20 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
-        this.title = 'public';
     }
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [])
     ], AppComponent);
     return AppComponent;
 }());
@@ -198,7 +201,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 15px;\n    background-color: inherit\n}\n\n.comment{\n    max-width: 400px;\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 10px;\n    margin-left: 10px;\n    background-color: white;\n}\n\n.comments{\n    border: 1px solid rgb(165, 165, 165);\n    border-radius: 3px;\n    background-color: rgb(187, 187, 187);\n    max-width: 300px;\n    padding: 10px 0 5px 0;\n    margin: 10px;\n}\n\n.form{\n    padding: 0 30px;\n}\n\n.post{\n    margin: 30px;\n    background-color: rgb(185, 218, 230);\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 15px;\n}\n\n.red{\n    color: red;\n}\n\n.thumb{\n    max-width: 25px;\n}\n\n.name{\n    max-width: 200px;\n}\n\n.space {\n    margin-left: 10px;\n}"
+module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 55px;\n    background-color: inherit\n}\n\n.comment{\n    max-width: 400px;\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 10px;\n    margin-left: 10px;\n    background-color: white;\n}\n\n.comments{\n    border: 1px solid rgb(165, 165, 165);\n    border-radius: 3px;\n    background-color: rgb(187, 187, 187);\n    max-width: 300px;\n    padding: 10px 0 5px 0;\n    margin: 10px;\n}\n\n.form{\n    padding: 0 30px;\n}\n\n.post{\n    margin: 30px;\n    background-color: rgb(185, 218, 230);\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 15px;\n}\n\n.red{\n    color: red;\n}\n\n.thumb{\n    max-width: 25px;\n}\n\n.name{\n    max-width: 200px;\n}\n\n.space {\n    margin-left: 10px;\n}\n\n#lower{\n    background-color: rgb(185, 218, 230);\n    position: fixed;\n    left: 0px;\n    bottom: 0px;\n    height: 40px;\n    width: 100%;\n    border: 1px solid rgb(180, 180, 180);\n    padding: 0px 25px;\n}\n\n.chat{\n    background-color: rgb(234, 242, 245);\n    max-width: 17%;\n    border-left: 1px solid rgb(180, 180, 180);\n    border-right: 1px solid rgb(180, 180, 180);\n    height: 40px;\n    padding: 5px 10px;\n    cursor: pointer;\n}\n\n.chat p{\n    margin-bottom: 0;\n}\n\n.chatRow{\n    position: fixed;\n    width: 100%;\n    left: 0px;\n    bottom: 40px;\n    pointer-events: none;\n}\n\n.chatBox{\n    background-color: rgb(234, 242, 245);\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 2px;\n    max-width: 250px;\n    height: 300px;\n    margin-right: 0px;\n    padding: 5px 10px;\n    pointer-events: all;\n}\n\n.chatBox img{\n    max-width: 15px;\n    cursor: pointer;\n}\n\n.text{\n    background-color: rgb(253, 254, 255);\n    border: 1px solid rgba(180, 180, 180, 0.534);\n    border-radius: 3px;\n    padding: 5px 10px;\n    overflow: scroll;\n    max-height: 250px;\n}\n\n.text p{\n    margin-bottom: 3px;\n}"
 
 /***/ }),
 
@@ -209,7 +212,7 @@ module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 15px;\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'\n  crossorigin='anonymous'> <!-- Bootstrap -->\n<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> <!-- jQuery -->\n<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n\n<body>\n  <div class=\"row\">\n    <div class=\"col-10\">\n      <h2>Post a message on the wall</h2>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-primary\" *ngIf=\"!user\" [routerLink]=\"['/login']\">Log In</button>\n      <button class=\"btn btn-danger\" *ngIf=\"user\" (click)=\"logout()\">Log Out</button>\n    </div>\n  </div>\n  <form class=\"form\" (submit)=\"newPost()\">\n    <div class=\"form-group\">\n      <label for=\"post\">Post:</label>\n      <textarea class=\"form-control\" id=\"post\" rows=\"3\" name=\"post.post\" [(ngModel)]=\"post.post\" placeholder=\"What's on your mind today?..\"></textarea>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"\">Name:</label>\n      <input *ngIf=\"!user\" type=\"text\" class=\"form-control name\" name=\"post.name\" [(ngModel)]=\"post.name\" placeholder=\"Name\">\n      <input *ngIf=\"user\" type=\"text\" class=\"form-control name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n    </div>\n    <p class=\"red\" *ngFor=\"let flash of postFlash\">{{flash}}</p>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <div class=\"post row\" *ngFor=\"let post of posts\">\n    <div class=\"col-9\">\n      <h3>{{post.post}}</h3>\n      <h5><img class=\"thumb\" src=\"assets/thumb-up-icon.png\" alt=\"likes\"> {{post.like_count}}</h5>\n      <h4>{{post.name}} <small>{{post.created_at}}</small></h4>\n      <div class=\"comments row\" *ngFor=\"let comment of post.comments\">\n        <div class=\"col-8\">\n          <h5>{{comment.comment}}</h5>\n          <h6>- {{comment.name}}</h6>\n        </div>\n        <div class=\"col\">\n            <button class=\"btn btn-sm btn-warning\" (click)=\"removeComment(comment._id)\">Delete</button>\n        </div>\n      </div>\n      <button class=\"btn btn-sm btn-primary\" *ngIf=\"newComment.post_id != post._id && user\" (click)=\"open(post._id)\">Write Comment</button>\n      <form class=\"comment\" *ngIf=\"newComment.post_id == post._id\" (submit)=\"comment()\">\n        <div class=\"form-group\">\n          <label for=\"comment\">Comment:</label>\n          <textarea class=\"form-control\" id=\"post\" rows=\"2\" name=\"newComment.comment\" [(ngModel)]=\"newComment.comment\" placeholder=\"Comment\"></textarea>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"name\">Name:</label>\n          <input type=\"text\" class=\"form-control\" id=\"name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n        </div>\n        <p class=\"red\" *ngFor=\"let flash of commentFlash\">{{flash}}</p>\n        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-info space\" *ngIf=\"user\" (click)=\"likePost(post._id)\">Like!</button>\n      <span *ngIf=\"user\">\n        <button class=\"btn btn-warning space\" *ngIf=\"post.userId == user._id\" (click)=\"delete(post._id)\">Delete</button>\n      </span>\n    </div>\n  </div>\n</body>"
+module.exports = "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'\n  crossorigin='anonymous'> <!-- Bootstrap -->\n<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> <!-- jQuery -->\n<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n\n<body>\n  <div class=\"row\">\n    <div class=\"col-10\">\n      <h2>Post a message on the wall</h2>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-primary\" *ngIf=\"!user\" [routerLink]=\"['/login']\">Log In</button>\n      <button class=\"btn btn-danger\" *ngIf=\"user\" (click)=\"logout()\">Log Out</button>\n    </div>\n  </div>\n  <form class=\"form\" (submit)=\"newPost()\">\n    <div class=\"form-group\">\n      <label for=\"post\">Post:</label>\n      <textarea class=\"form-control\" id=\"post\" rows=\"3\" name=\"post.post\" [(ngModel)]=\"post.post\" placeholder=\"What's on your mind today?..\"></textarea>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"\">Name:</label>\n      <input *ngIf=\"!user\" type=\"text\" class=\"form-control name\" name=\"post.name\" [(ngModel)]=\"post.name\" placeholder=\"Name\">\n      <input *ngIf=\"user\" type=\"text\" class=\"form-control name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n    </div>\n    <p class=\"red\" *ngFor=\"let flash of postFlash\">{{flash}}</p>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <div class=\"post row\" *ngFor=\"let post of posts\">\n    <div class=\"col-9\">\n      <h3>{{post.post}}</h3>\n      <h5><img class=\"thumb\" src=\"assets/thumb-up-icon.png\" alt=\"likes\"> {{post.like_count}}</h5>\n      <h4>{{post.name}} <small>{{post.created_at}}</small></h4>\n      <div class=\"comments row\" *ngFor=\"let comment of post.comments\">\n        <div class=\"col-8\">\n          <h5>{{comment.comment}}</h5>\n          <h6>- {{comment.name}}</h6>\n        </div>\n        <div class=\"col\">\n            <button class=\"btn btn-sm btn-warning\" (click)=\"removeComment(comment._id)\">Delete</button>\n        </div>\n      </div>\n      <button class=\"btn btn-sm btn-primary\" *ngIf=\"newComment.post_id != post._id && user\" (click)=\"open(post._id)\">Write Comment</button>\n      <form class=\"comment\" *ngIf=\"newComment.post_id == post._id\" (submit)=\"comment()\">\n        <div class=\"form-group\">\n          <label for=\"comment\">Comment:</label>\n          <textarea class=\"form-control\" id=\"post\" rows=\"2\" name=\"newComment.comment\" [(ngModel)]=\"newComment.comment\" placeholder=\"Comment\"></textarea>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"name\">Name:</label>\n          <input type=\"text\" class=\"form-control\" id=\"name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n        </div>\n        <p class=\"red\" *ngFor=\"let flash of commentFlash\">{{flash}}</p>\n        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-info space\" *ngIf=\"user\" (click)=\"likePost(post._id)\">Like!</button>\n      <span *ngIf=\"user\">\n        <button class=\"btn btn-warning space\" *ngIf=\"post.userId == user._id\" (click)=\"delete(post._id)\">Delete</button>\n      </span>\n    </div>\n  </div>\n</body>\n\n<div class=\"chatRow row\">\n  <div class=\"col\"></div>\n  <div *ngIf=\"newMessage\" class=\"col chatBox\">\n    <div class=\"row\">\n      <div class=\"col\">\n        <h5>Jimmy</h5>\n      </div>\n      <div class=\"col-1\">\n        <img (click)=\"minimise()\" src=\"assets/minus.png\" alt=\"minus\">\n      </div>\n      <div class=\"col-2\">\n        <img (click)=\"deleteChat()\" src=\"assets/close.png\" alt=\"close\">\n      </div>\n    </div>\n    <div id=\"text\" class=\"text\">\n      <p>yee - Jimmy</p>\n      <p>yeah? - Jim</p>\n      <p>yep! - Jimmy</p>\n      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>\n      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>\n      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>\n    </div>\n  </div>\n</div>\n<div id=\"lower\">\n  <div class=\"row\">\n    <div class=\"col\"></div>\n    <div (click)=\"openChat()\" class=\"col chat\">\n      <p>Jimmy</p>\n    </div>\n  </div>\n</div>\n\n\n<script>\n  $('#text').ready(function(){\n    $('#text').scrollTop = $('#text').scrollHeight\n  })\n</script>"
 
 /***/ }),
 
@@ -253,9 +256,20 @@ var HomeComponent = /** @class */ (function () {
         };
         this.commentFlash = [];
         this.postFlash = [];
+        this.newMessage = null;
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.getPosts();
+    };
+    HomeComponent.prototype.openChat = function () {
+        this.newMessage = {
+            message: ""
+        };
+    };
+    HomeComponent.prototype.minimise = function () {
+        this.newMessage = null;
+    };
+    HomeComponent.prototype.deleteChat = function () {
     };
     HomeComponent.prototype.likePost = function (id) {
         var _this = this;
@@ -501,6 +515,7 @@ var LoginComponent = /** @class */ (function () {
     function LoginComponent(_httpService, _router) {
         this._httpService = _httpService;
         this._router = _router;
+        this.aTaskEventEmitter = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.newUser = {
             name: "",
             email: "",
@@ -523,6 +538,7 @@ var LoginComponent = /** @class */ (function () {
             observable.subscribe(function (data) {
                 //console.log(data)
                 if (data["message"] == "Success") {
+                    _this.aTaskEventEmitter.emit(data["data"]);
                     _this._router.navigate(['/']);
                 }
                 else {
@@ -572,6 +588,10 @@ var LoginComponent = /** @class */ (function () {
             this.regFlash.push("Please enter and confirm your password, password must be more than 3 char and must match.");
         }
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], LoginComponent.prototype, "aTaskEventEmitter", void 0);
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-login',

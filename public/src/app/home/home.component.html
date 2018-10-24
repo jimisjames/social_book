@@ -65,3 +65,43 @@
     </div>
   </div>
 </body>
+
+<div class="chatRow row">
+  <div class="col"></div>
+  <div *ngIf="newMessage" class="col chatBox">
+    <div class="row">
+      <div class="col">
+        <h5>Jimmy</h5>
+      </div>
+      <div class="col-1">
+        <img (click)="minimise()" src="assets/minus.png" alt="minus">
+      </div>
+      <div class="col-2">
+        <img (click)="deleteChat()" src="assets/close.png" alt="close">
+      </div>
+    </div>
+    <div id="text" class="text">
+      <p>yee - Jimmy</p>
+      <p>yeah? - Jim</p>
+      <p>yep! - Jimmy</p>
+      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>
+      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>
+      <p>Longer Message Longer Message Longer Message Longer Message ! - Jimmy</p>
+    </div>
+  </div>
+</div>
+<div id="lower">
+  <div class="row">
+    <div class="col"></div>
+    <div (click)="openChat()" class="col chat">
+      <p>Jimmy</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#text').ready(function(){
+    $('#text').scrollTop = $('#text').scrollHeight
+  })
+</script>
