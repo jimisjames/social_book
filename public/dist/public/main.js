@@ -198,7 +198,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 15px;\n    background-color: inherit\n}\n\n.comment{\n    max-width: 400px;\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 10px;\n    margin-left: 10px;\n    background-color: white;\n}\n\n.comments{\n    margin-left: 20px;\n    border: 1px solid rgb(165, 165, 165);\n    border-radius: 3px;\n    background-color: rgb(187, 187, 187);\n    max-width: 300px;\n    padding: 10px 10px 5px 10px;\n    margin: 10px;\n}\n\n.form{\n    padding: 0 30px;\n}\n\n.post{\n    margin: 30px;\n    background-color: rgb(185, 218, 230);\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 15px;\n}\n\n.red{\n    color: red;\n}\n\n.thumb{\n    max-width: 25px;\n}\n\n#name{\n    max-width: 200px;\n}"
+module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 15px;\n    background-color: inherit\n}\n\n.comment{\n    max-width: 400px;\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 10px;\n    margin-left: 10px;\n    background-color: white;\n}\n\n.comments{\n    border: 1px solid rgb(165, 165, 165);\n    border-radius: 3px;\n    background-color: rgb(187, 187, 187);\n    max-width: 300px;\n    padding: 10px 0 5px 0;\n    margin: 10px;\n}\n\n.form{\n    padding: 0 30px;\n}\n\n.post{\n    margin: 30px;\n    background-color: rgb(185, 218, 230);\n    border: 1px solid rgb(180, 180, 180);\n    border-radius: 3px;\n    padding: 15px;\n}\n\n.red{\n    color: red;\n}\n\n.thumb{\n    max-width: 25px;\n}\n\n.name{\n    max-width: 200px;\n}\n\n.space {\n    margin-left: 10px;\n}"
 
 /***/ }),
 
@@ -209,7 +209,7 @@ module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 15px;\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'\n  crossorigin='anonymous'> <!-- Bootstrap -->\n<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> <!-- jQuery -->\n<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n\n<body>\n  <div class=\"row\">\n    <div class=\"col-10\">\n      <h2>Post a message on the wall</h2>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-primary\" *ngIf=\"!user\" [routerLink]=\"['/login']\">Log In</button>\n      <button class=\"btn btn-danger\" *ngIf=\"user\" (click)=\"logout()\">Log Out</button>\n    </div>\n  </div>\n  <form class=\"form\" (submit)=\"send()\">\n    <div class=\"form-group\">\n      <label for=\"post\">Post:</label>\n      <textarea class=\"form-control\" id=\"post\" rows=\"3\" name=\"post.post\" [(ngModel)]=\"post.post\" placeholder=\"What's on your mind today?..\"></textarea>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"name\">Name:</label>\n      <input type=\"text\" class=\"form-control\" id=\"name\" name=\"post.name\" [(ngModel)]=\"post.name\" placeholder=\"Name\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <div class=\"post row\" *ngFor=\"let post of posts\">\n    <div class=\"col-10\">\n      <h3>{{post.post}}</h3>\n      <h5><img class=\"thumb\" src=\"assets/thumb-up-icon.png\" alt=\"likes\"> {{post.like_count}}</h5>\n      <h4>{{post.name}} <small>{{post.created_at}}</small></h4>\n      <div class=\"comments\" *ngFor=\"let comment of post.comments\">\n        <h5>{{comment.comment}}</h5>\n        <h6>- {{comment.name}}</h6>\n      </div>\n      <button class=\"btn btn-sm btn-primary\" *ngIf=\"newComment.post_id != post._id\" (click)=\"open(post._id)\">Write Comment</button>\n      <form class=\"comment\" *ngIf=\"newComment.post_id == post._id\" (submit)=\"comment()\">\n        <div class=\"form-group\">\n          <label for=\"comment\">Comment:</label>\n          <textarea class=\"form-control\" id=\"post\" rows=\"2\" name=\"newComment.comment\" [(ngModel)]=\"newComment.comment\" placeholder=\"Comment\"></textarea>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"name\">Name:</label>\n          <input type=\"text\" class=\"form-control\" id=\"name\" name=\"newComment.name\" [(ngModel)]=\"newComment.name\" placeholder=\"Name\">\n        </div>\n        <div *ngIf=\"commentFlash\">\n          <p class=\"red\" *ngFor=\"let flash of commentFlash\">{{flash}}</p>\n        </div>\n        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-success\" (click)=\"likePost(post._id)\">Like!</button>\n    </div>\n  </div>\n</body>"
+module.exports = "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'\n  crossorigin='anonymous'> <!-- Bootstrap -->\n<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> <!-- jQuery -->\n<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n\n<body>\n  <div class=\"row\">\n    <div class=\"col-10\">\n      <h2>Post a message on the wall</h2>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-primary\" *ngIf=\"!user\" [routerLink]=\"['/login']\">Log In</button>\n      <button class=\"btn btn-danger\" *ngIf=\"user\" (click)=\"logout()\">Log Out</button>\n    </div>\n  </div>\n  <form class=\"form\" (submit)=\"newPost()\">\n    <div class=\"form-group\">\n      <label for=\"post\">Post:</label>\n      <textarea class=\"form-control\" id=\"post\" rows=\"3\" name=\"post.post\" [(ngModel)]=\"post.post\" placeholder=\"What's on your mind today?..\"></textarea>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"\">Name:</label>\n      <input *ngIf=\"!user\" type=\"text\" class=\"form-control name\" name=\"post.name\" [(ngModel)]=\"post.name\" placeholder=\"Name\">\n      <input *ngIf=\"user\" type=\"text\" class=\"form-control name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n    </div>\n    <p class=\"red\" *ngFor=\"let flash of postFlash\">{{flash}}</p>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <div class=\"post row\" *ngFor=\"let post of posts\">\n    <div class=\"col-9\">\n      <h3>{{post.post}}</h3>\n      <h5><img class=\"thumb\" src=\"assets/thumb-up-icon.png\" alt=\"likes\"> {{post.like_count}}</h5>\n      <h4>{{post.name}} <small>{{post.created_at}}</small></h4>\n      <div class=\"comments row\" *ngFor=\"let comment of post.comments\">\n        <div class=\"col-8\">\n          <h5>{{comment.comment}}</h5>\n          <h6>- {{comment.name}}</h6>\n        </div>\n        <div class=\"col\">\n            <button class=\"btn btn-sm btn-warning\" (click)=\"removeComment(comment._id)\">Delete</button>\n        </div>\n      </div>\n      <button class=\"btn btn-sm btn-primary\" *ngIf=\"newComment.post_id != post._id && user\" (click)=\"open(post._id)\">Write Comment</button>\n      <form class=\"comment\" *ngIf=\"newComment.post_id == post._id\" (submit)=\"comment()\">\n        <div class=\"form-group\">\n          <label for=\"comment\">Comment:</label>\n          <textarea class=\"form-control\" id=\"post\" rows=\"2\" name=\"newComment.comment\" [(ngModel)]=\"newComment.comment\" placeholder=\"Comment\"></textarea>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"name\">Name:</label>\n          <input type=\"text\" class=\"form-control\" id=\"name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n        </div>\n        <p class=\"red\" *ngFor=\"let flash of commentFlash\">{{flash}}</p>\n        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-info space\" *ngIf=\"user\" (click)=\"likePost(post._id)\">Like!</button>\n      <span *ngIf=\"user\">\n        <button class=\"btn btn-warning space\" *ngIf=\"post.userId == user._id\" (click)=\"delete(post._id)\">Delete</button>\n      </span>\n    </div>\n  </div>\n</body>"
 
 /***/ }),
 
@@ -242,7 +242,8 @@ var HomeComponent = /** @class */ (function () {
         this.user = this._httpService.user;
         this.post = {
             post: "",
-            name: ""
+            name: "",
+            userId: "",
         };
         this.posts = [];
         this.newComment = {
@@ -250,21 +251,46 @@ var HomeComponent = /** @class */ (function () {
             comment: "",
             name: ""
         };
-        this.commentFlash = null;
+        this.commentFlash = [];
+        this.postFlash = [];
     }
     HomeComponent.prototype.ngOnInit = function () {
         this.getPosts();
+    };
+    HomeComponent.prototype.likePost = function (id) {
+        var _this = this;
+        var observable = this._httpService.likePost({ postId: id, userId: this.user['_id'] });
+        observable.subscribe(function (data) {
+            //console.log(data)
+            if (data["message"] == "Success") {
+                _this.getPosts();
+            }
+        });
     };
     HomeComponent.prototype.logout = function () {
         this._httpService.logout();
         this.user = this._httpService.user;
     };
-    HomeComponent.prototype.send = function () {
+    HomeComponent.prototype.newPost = function () {
         var _this = this;
-        var observable = this._httpService.post(this.post);
+        if (this.user) {
+            this.post.name = this.user['name'];
+            this.post.userId = this.user['_id'];
+        }
+        //console.log(this.post)
+        var observable = this._httpService.newPost(this.post);
         observable.subscribe(function (data) {
-            //console.log(data)
-            _this.getPosts();
+            if (data["message"] == "Success") {
+                _this.getPosts();
+                _this.post.post = "";
+                _this.postFlash = [];
+            }
+            else {
+                _this.postFlash = [];
+                for (var err in data['error']['errors']) {
+                    _this.postFlash.push(data['error']['errors'][err]["message"]);
+                }
+            }
         });
     };
     HomeComponent.prototype.getPosts = function () {
@@ -290,6 +316,7 @@ var HomeComponent = /** @class */ (function () {
     };
     HomeComponent.prototype.comment = function () {
         var _this = this;
+        this.newComment.name = this.user["name"];
         var observable = this._httpService.comment(this.newComment);
         observable.subscribe(function (data) {
             //console.log(data)
@@ -309,6 +336,30 @@ var HomeComponent = /** @class */ (function () {
                 }
             }
         });
+    };
+    HomeComponent.prototype.delete = function (id) {
+        var _this = this;
+        if (confirm("Are you sure you want to delete this post?")) {
+            var observable = this._httpService.delete(id);
+            observable.subscribe(function (data) {
+                //console.log(data)
+                if (data['message'] == "Success") {
+                    _this.getPosts();
+                }
+            });
+        }
+    };
+    HomeComponent.prototype.removeComment = function (id) {
+        var _this = this;
+        if (confirm("Are you sure you want to delete this comment?")) {
+            var observable = this._httpService.removeComment(id);
+            observable.subscribe(function (data) {
+                console.log(data);
+                if (data['message'] == "Success") {
+                    _this.getPosts();
+                }
+            });
+        }
     };
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -352,8 +403,7 @@ var HttpService = /** @class */ (function () {
     function HttpService(_http) {
         this._http = _http;
     }
-    HttpService.prototype.post = function (data) {
-        //console.log(data)
+    HttpService.prototype.newPost = function (data) {
         return this._http.post('/', data);
     };
     HttpService.prototype.getPosts = function () {
@@ -372,12 +422,20 @@ var HttpService = /** @class */ (function () {
             if (data["message"] == "Success") {
                 _this.user = data["data"];
             }
-            console.log(_this.user);
         });
         return x;
     };
     HttpService.prototype.logout = function () {
         this.user = null;
+    };
+    HttpService.prototype.likePost = function (data) {
+        return this._http.post('/likePost', data);
+    };
+    HttpService.prototype.delete = function (id) {
+        return this._http.delete('/' + id);
+    };
+    HttpService.prototype.removeComment = function (id) {
+        return this._http.delete('/comment/' + id);
     };
     HttpService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -460,12 +518,18 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.login = function () {
         var _this = this;
-        if (this.user.email.length > 7 || this.user.password.length > 2) {
+        if (this.user.email.length > 7 && this.user.password.length > 2) {
             var observable = this._httpService.login(this.user);
             observable.subscribe(function (data) {
-                console.log(data);
+                //console.log(data)
                 if (data["message"] == "Success") {
                     _this._router.navigate(['/']);
+                }
+                else {
+                    _this.logFlash = [];
+                    for (var err in data["error"]["errors"]) {
+                        _this.logFlash.push(data["error"]["errors"][err]["message"]);
+                    }
                 }
             });
         }
@@ -483,6 +547,16 @@ var LoginComponent = /** @class */ (function () {
                 if (data["message"] == "Success") {
                     _this.regFlash = [];
                     _this.logFlash = [];
+                    _this.newUser = {
+                        name: "",
+                        email: "",
+                        password: ""
+                    };
+                    _this.user = {
+                        email: "",
+                        password: ""
+                    };
+                    _this.confirm_password = "";
                     _this.regFlash.push("You are now registered! Please log in");
                 }
                 else {

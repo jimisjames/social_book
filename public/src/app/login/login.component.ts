@@ -34,12 +34,17 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    if(this.user.email.length > 7 || this.user.password.length > 2){
+    if(this.user.email.length > 7 && this.user.password.length > 2){
       let observable = this._httpService.login(this.user)
       observable.subscribe(data => {
-        console.log(data)
+        //console.log(data)
         if(data["message"] == "Success"){
           this._router.navigate(['/']);
+        } else {
+          this.logFlash = []
+          for(let err in data["error"]["errors"]){
+            this.logFlash.push(data["error"]["errors"][err]["message"])
+          }
         }
       })
     } else {
@@ -56,6 +61,16 @@ export class LoginComponent implements OnInit {
         if(data["message"] == "Success"){
           this.regFlash = []
           this.logFlash = []
+          this.newUser = {
+            name: "",
+            email: "",
+            password: ""
+          }
+          this.user = {
+            email: "",
+            password: ""
+          }
+          this.confirm_password = ""
           this.regFlash.push("You are now registered! Please log in")
         } else {
           this.regFlash = []

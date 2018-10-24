@@ -9,11 +9,10 @@ export class HttpService {
   constructor(
     private _http: HttpClient,
   ) { }
-  
+
   user: Object
 
-  post(data){
-    //console.log(data)
+  newPost(data){
     return this._http.post('/', data)
   }
 
@@ -35,12 +34,23 @@ export class HttpService {
       if(data["message"] == "Success"){
         this.user = data["data"]
       }
-      console.log(this.user)
     })
     return x
   }
 
   logout(){
     this.user = null
+  }
+
+  likePost(data){
+    return this._http.post('/likePost', data)
+  }
+
+  delete(id){
+    return this._http.delete('/'+ id)
+  }
+
+  removeComment(id){
+    return this._http.delete('/comment/'+ id)
   }
 }

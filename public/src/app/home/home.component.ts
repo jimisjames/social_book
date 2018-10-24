@@ -14,7 +14,8 @@ export class HomeComponent implements OnInit {
 
   post = {
     post: "",
-    name: ""
+    name: "",
+    userId: "",
   }
 
   posts = []
@@ -24,10 +25,21 @@ export class HomeComponent implements OnInit {
     comment: "",
     name: ""
   }
-  commentFlash = null
+  commentFlash = []
+  postFlash = []
 
   ngOnInit() {
     this.getPosts()
+  }
+
+  likePost(id){
+    let observable = this._httpService.likePost({postId: id, userId: this.user['_id']})
+    observable.subscribe(data => {
+      //console.log(data)
+      if(data["message"] == "Success"){
+        this.getPosts()
+      }
+    })
   }
 
   logout(){
@@ -35,11 +47,24 @@ export class HomeComponent implements OnInit {
     this.user = this._httpService.user
   }
 
-  send(){
-    let observable = this._httpService.post(this.post)
+  newPost(){
+    if(this.user){
+      this.post.name = this.user['name']
+      this.post.userId = this.user['_id']
+    }
+    //console.log(this.post)
+    let observable = this._httpService.newPost(this.post)
     observable.subscribe(data => {
-      //console.log(data)
-      this.getPosts()
+      if(data["message"] == "Success"){
+        this.getPosts()
+        this.post.post = ""
+        this.postFlash = []
+      } else {
+        this.postFlash = []
+        for(let err in data['error']['errors']){
+          this.postFlash.push(data['error']['errors'][err]["message"])
+        }
+      }
     })
   }
 
@@ -65,6 +90,7 @@ export class HomeComponent implements OnInit {
   }
 
   comment(){
+    this.newComment.name = this.user["name"]
     let observable = this._httpService.comment(this.newComment)
     observable.subscribe(data => {
       //console.log(data)
@@ -83,5 +109,29 @@ export class HomeComponent implements OnInit {
         }
       }
     })
+  }
+
+  delete(id){
+    if(confirm("Are you sure you want to delete this post?")){
+      let observable = this._httpService.delete(id)
+      observable.subscribe(data => {
+        //console.log(data)
+        if(data['message'] == "Success"){
+          this.getPosts()
+        }
+      })
+    }
+  }
+
+  removeComment(id){
+    if(confirm("Are you sure you want to delete this comment?")){
+      let observable = this._httpService.removeComment(id)
+      observable.subscribe(data => {
+        console.log(data)
+        if(data['message'] == "Success"){
+          this.getPosts()
+        }
+      })
+    }
   }
 }

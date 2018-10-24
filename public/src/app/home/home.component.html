@@ -16,27 +16,34 @@
       <button class="btn btn-danger" *ngIf="user" (click)="logout()">Log Out</button>
     </div>
   </div>
-  <form class="form" (submit)="send()">
+  <form class="form" (submit)="newPost()">
     <div class="form-group">
       <label for="post">Post:</label>
       <textarea class="form-control" id="post" rows="3" name="post.post" [(ngModel)]="post.post" placeholder="What's on your mind today?.."></textarea>
     </div>
     <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" class="form-control" id="name" name="post.name" [(ngModel)]="post.name" placeholder="Name">
+      <label for="">Name:</label>
+      <input *ngIf="!user" type="text" class="form-control name" name="post.name" [(ngModel)]="post.name" placeholder="Name">
+      <input *ngIf="user" type="text" class="form-control name" name="user.name" [(ngModel)]="user.name" disabled>
     </div>
+    <p class="red" *ngFor="let flash of postFlash">{{flash}}</p>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   <div class="post row" *ngFor="let post of posts">
-    <div class="col-10">
+    <div class="col-9">
       <h3>{{post.post}}</h3>
       <h5><img class="thumb" src="assets/thumb-up-icon.png" alt="likes"> {{post.like_count}}</h5>
       <h4>{{post.name}} <small>{{post.created_at}}</small></h4>
-      <div class="comments" *ngFor="let comment of post.comments">
-        <h5>{{comment.comment}}</h5>
-        <h6>- {{comment.name}}</h6>
+      <div class="comments row" *ngFor="let comment of post.comments">
+        <div class="col-8">
+          <h5>{{comment.comment}}</h5>
+          <h6>- {{comment.name}}</h6>
+        </div>
+        <div class="col">
+            <button class="btn btn-sm btn-warning" (click)="removeComment(comment._id)">Delete</button>
+        </div>
       </div>
-      <button class="btn btn-sm btn-primary" *ngIf="newComment.post_id != post._id" (click)="open(post._id)">Write Comment</button>
+      <button class="btn btn-sm btn-primary" *ngIf="newComment.post_id != post._id && user" (click)="open(post._id)">Write Comment</button>
       <form class="comment" *ngIf="newComment.post_id == post._id" (submit)="comment()">
         <div class="form-group">
           <label for="comment">Comment:</label>
@@ -44,16 +51,17 @@
         </div>
         <div class="form-group">
           <label for="name">Name:</label>
-          <input type="text" class="form-control" id="name" name="newComment.name" [(ngModel)]="newComment.name" placeholder="Name">
+          <input type="text" class="form-control" id="name" name="user.name" [(ngModel)]="user.name" disabled>
         </div>
-        <div *ngIf="commentFlash">
-          <p class="red" *ngFor="let flash of commentFlash">{{flash}}</p>
-        </div>
+        <p class="red" *ngFor="let flash of commentFlash">{{flash}}</p>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
     <div class="col">
-      <button class="btn btn-success" (click)="likePost(post._id)">Like!</button>
+      <button class="btn btn-info space" *ngIf="user" (click)="likePost(post._id)">Like!</button>
+      <span *ngIf="user">
+        <button class="btn btn-warning space" *ngIf="post.userId == user._id" (click)="delete(post._id)">Delete</button>
+      </span>
     </div>
   </div>
 </body>

@@ -1,16 +1,13 @@
 var mongoose = require('mongoose')
 
 var CommentSchema = new mongoose.Schema({
-    id: { type: String, default: "" },
+    userId: { type: String, default: "" },
     name: { type: String, required: [true, "Name is required"], minlength: [3, "Name has a required length of 3"]},
     comment: { type: String, required: [true, "A comment is required"], minlength: [1, "A comment has a required length of 3"]},
-    likes: [
-        {id: {type: String, required: true}}
-    ]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'} })
 
 var PostSchema = new mongoose.Schema({
-    id: { type: String, default: "" },
+    userId: { type: String, default: "" },
     name: { type: String, required: [true, "Name is required"], minlength: [3, "Name has a required length of 3"]},
     post: { type: String, required: [true, "Post is required"], minlength: [3, "Post has a required length of 3"]},
     comments: [CommentSchema],

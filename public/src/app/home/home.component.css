@@ -14,12 +14,11 @@ body{
 }
 
 .comments{
-    margin-left: 20px;
     border: 1px solid rgb(165, 165, 165);
     border-radius: 3px;
     background-color: rgb(187, 187, 187);
     max-width: 300px;
-    padding: 10px 10px 5px 10px;
+    padding: 10px 0 5px 0;
     margin: 10px;
 }
 
@@ -43,6 +42,10 @@ body{
     max-width: 25px;
 }
 
-#name{
+.name{
     max-width: 200px;
+}
+
+.space {
+    margin-left: 10px;
 }

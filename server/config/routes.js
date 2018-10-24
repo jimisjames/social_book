@@ -22,6 +22,17 @@ module.exports = function (app) {
         posts.login(req, res)
     })
 
+    app.post('/likePost', function (req, res) {
+        posts.likePost(req, res)
+    })
+
+    app.delete('/:id', function (req, res) {
+        posts.deletePost(req, res, req.params.id)
+    })
+    app.delete('/comment/:id', function (req, res) {
+        posts.deleteComment(req, res, req.params.id)
+    })
+
     /* app.get('/one/:id', function (req, res) {
         pets.get(req, res, req.params.id)
     }) */
@@ -30,9 +41,6 @@ module.exports = function (app) {
         pets.like(req, res)
     }) */
 
-    /* app.delete('/:id', function (req, res) {
-        pets.delete(req, res, req.params.id)
-    }) */
     
     /* app.put('/', function (req, res) {
         pets.update(req, res)

@@ -21,7 +21,7 @@ module.exports = {
     },
 
     new: function(req, res) {
-        //console.log(req.body)
+        console.log(req.body)
         var post = new Post(req.body);
         post.save(function (err) {
             if (err) {
@@ -106,7 +106,61 @@ module.exports = {
                 })
             }
         })
-    }
+    },
+
+    likePost: function(req, res) {
+        //console.log(req.body)
+        Post.find({_id: req.body.postId, likes: {$elemMatch: {id: req.body.userId}}}, (err, data) => {
+            if(err){
+                res.json({message: "Error", error: err});
+            } else {
+                //console.log("data", data)
+                if(data.length > 0){
+                    Post.updateOne({ _id: req.body.postId }, { $pull: {likes: {id: req.body.userId} }}, function (err, data) {
+                        if (err) {
+                            //console.log(err)
+                            res.json({message: "Error", error: err});
+                        } else {
+                            res.json({message: "Success", data: data});
+                        }
+                    })
+                } else {
+                    Post.updateOne({ _id: req.body.postId }, { $push: {likes: {id: req.body.userId} }}, function (err, data) {
+                        if (err) {
+                            //console.log(err)
+                            res.json({message: "Error", error: err});
+                        } else {
+                            res.json({message: "Success", data: data});
+                        }
+                    })
+                }
+            }
+        })
+    },
+
+    deletePost: function(req, res, id) {
+        Post.deleteOne({ _id: id }, function (err) {
+            if (err) {
+                console.log('something went wrong');
+                res.json({message: "Error", error: err});
+            } else {
+                //console.log('successfully removed');
+                res.json({message: "Success"});
+            }
+        })
+    },
+
+    deleteComment: function(req, res, id) {
+        console.log(id)
+        Post.updateOne({ comments: {$elemMatch: { _id: id }}}, { $pull: {comments: {_id: id} }}, function (err, data) {
+            if (err) {
+                //console.log(err)
+                res.json({message: "Error", error: err});
+            } else {
+                res.json({message: "Success", data: data});
+            }
+        })
+    },
 
     /* get: function(req, res, id) {
         Pet.findOne({ _id: id }, function (err, data) {
@@ -119,28 +173,7 @@ module.exports = {
         })
     }, */
 
-    /* like: function(req, res) {
-        Pet.updateOne({ _id: req.body._id }, { $set: {likes: req.body.likes }}, function (err, data) {
-            if (err) {
-                console.log(err)
-                res.json({message: "Error", error: err});
-            } else {
-                res.json({message: "Success", data: data});
-            }
-        })
-    }, */
 
-    /* delete: function(req, res, id) {
-    	Pet.deleteOne({ _id: id }, function (err) {
-            if (err) {
-                console.log('something went wrong');
-                res.json({message: "Error", error: err});
-            } else {
-                //console.log('successfully removed pet');
-                res.json({message: "Success"});
-            }
-        })
-    }, */
 
     /* update: function(req, res) {
         Pet.findOne({ name: req.body.name }, function (err, data) {
