@@ -15,7 +15,11 @@ export class HttpService {
   user: Object
   subscription;
   chats;
-  chatRoom = null;
+  chatRoom = {
+    messages: [],
+    names: [],
+    id: ""
+  };
 
   constructor(
     private _http: HttpClient,
@@ -34,28 +38,16 @@ export class HttpService {
   }
 
   openChat(id){
-    if(this.chatRoom){
-      if(this.chatRoom['id'] == id){
-        this.chatRoom = null
-      } else {
-        for(let chat of this.chats){
-          if(chat._id == id){
-            this.chatRoom = {
-              messages: chat.messages,
-              names: chat.names,
-              id: chat._id
-            }
-          }
-        }
-      }
+    if(this.chatRoom.id == id){
+      this.chatRoom.messages = []
+      this.chatRoom.names = []
+      this.chatRoom.id = ""
     } else {
       for(let chat of this.chats){
         if(chat._id == id){
-          this.chatRoom = {
-            messages: chat.messages,
-            names: chat.names,
-            id: chat._id
-          }
+          this.chatRoom.messages = chat.messages
+          this.chatRoom.names = chat.names
+          this.chatRoom.id = chat._id
         }
       }
     }
@@ -82,12 +74,14 @@ export class HttpService {
   getChats(id){
     let x = this._http.get("/all/chats/"+id)
     x.subscribe(data => {
-      this.chats = data["data"]
-      for(let chat of this.chats){
-        chat['names'] = []
-        for(let name of chat['userNames'])
-          if(name != this.user['name']){
-            chat['names'].push(name)
+      if(data["message"] == "Success"){
+        this.chats = data["data"]
+        for(let chat of this.chats){
+          chat['names'] = []
+          for(let name of chat['userNames'])
+            if(name != this.user['name']){
+              chat['names'].push(name)
+          }
         }
       }
     })

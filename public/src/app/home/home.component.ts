@@ -31,7 +31,11 @@ export class HomeComponent implements OnInit {
     name: ""
   }
   sub: any;
-  chatRoom = null;
+  chatRoom = {
+    messages: [],
+    names: [],
+    id: ""
+  };
 
   commentFlash = []
   postFlash = []
@@ -70,12 +74,9 @@ export class HomeComponent implements OnInit {
       if(data["message"] == "Success"){
         this.getChats(this.user['_id'])
         this.openChat(data['data']['_id'])
+        this.openChat(data['data']['_id'])
+        //this.chatRoom.messages.push(this.newMessage+" - "+this.user['name'])
         this.newMessage = ""
-        this.chatRoom = {
-          messages: data['data']['messages'],
-          names: data['data']['names'],
-          id: data['data']['_id']
-        }
       }
     })
   }
@@ -116,13 +117,31 @@ export class HomeComponent implements OnInit {
   }
 
   openChat(id){
-    this._httpService.openChat(id)
-    this.chatRoom = this._httpService.chatRoom
-    console.log(this.chatRoom)
+    if(this.chatRoom.id == id){
+      this.chatRoom.messages = []
+      this.chatRoom.names = []
+      this.chatRoom.id = ""
+    } else {
+      for(let chat of this.chats){
+        if(chat._id == id){
+          this.chatRoom.messages = chat.messages
+          this.chatRoom.names = chat.names
+          this.chatRoom.id = chat._id
+        }
+      }
+    }
+    //this._httpService.openChat(id)
+    //this.chatRoom.messages = this._httpService.chatRoom.messages
+    //this.chatRoom.names = this._httpService.chatRoom.names
+    //this.chatRoom.id = this._httpService.chatRoom.id
   }
 
   minimise(){
-    this.chatRoom = null
+    this.chatRoom = {
+      messages: [],
+      names: [],
+      id: ""
+    };
   }
 
   deleteChat(){
@@ -132,7 +151,11 @@ export class HomeComponent implements OnInit {
         //console.log(data)
         if(data["message"] == "Success"){
           this.getChats(this.user["_id"])
-          this.chatRoom = null
+          this.chatRoom = {
+            messages: [],
+            names: [],
+            id: ""
+          };
         }
       })
     }

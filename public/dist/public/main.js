@@ -212,7 +212,7 @@ module.exports = "body{\n    padding-top: 15px;\n    padding-bottom: 55px;\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'\n  crossorigin='anonymous'> <!-- Bootstrap -->\n<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> <!-- jQuery -->\n<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n\n<body>\n  <div class=\"row\">\n    <div class=\"col-10\">\n      <h2>Post a message on the wall</h2>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-warning\" (click)=\"sendSocket()\" >Test Socket</button>\n      <button class=\"btn btn-primary\" *ngIf=\"!user\" [routerLink]=\"['/login']\">Log In</button>\n      <button class=\"btn btn-danger\" *ngIf=\"user\" (click)=\"logout()\">Log Out</button>\n    </div>\n  </div>\n  <form class=\"form\" (submit)=\"newPost()\">\n    <div class=\"form-group\">\n      <label for=\"post\">Post:</label>\n      <textarea class=\"form-control\" id=\"post\" rows=\"3\" name=\"post.post\" [(ngModel)]=\"post.post\" placeholder=\"What's on your mind today?..\"></textarea>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"\">Name:</label>\n      <input *ngIf=\"!user\" type=\"text\" class=\"form-control name\" name=\"post.name\" [(ngModel)]=\"post.name\" placeholder=\"Name\">\n      <input *ngIf=\"user\" type=\"text\" class=\"form-control name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n    </div>\n    <p class=\"red\" *ngFor=\"let flash of postFlash\">{{flash}}</p>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <div class=\"post row\" *ngFor=\"let post of posts\">\n    <div class=\"col-9\">\n      <h3>{{post.post}}</h3>\n      <h5><img class=\"thumb\" src=\"assets/thumb-up-icon.png\" alt=\"likes\"> {{post.like_count}}</h5>\n      <h4>{{post.name}} <small> - {{post.date}}</small></h4>\n      <div class=\"comments row\" *ngFor=\"let comment of post.comments\">\n        <div class=\"col-8\">\n          <h5>{{comment.comment}}</h5>\n          <h6>- {{comment.name}}</h6>\n        </div>\n        <div class=\"col\">\n            <button class=\"btn btn-sm btn-warning\" *ngIf=\"user && (comment.userId == user._id || post.userId == user._id)\" (click)=\"removeComment(comment._id)\">Delete</button>\n        </div>\n      </div>\n      <button class=\"btn btn-sm btn-primary\" *ngIf=\"newComment.post_id != post._id && user\" (click)=\"open(post._id)\">Write Comment</button>\n      <form class=\"comment\" *ngIf=\"newComment.post_id == post._id\" (submit)=\"comment()\">\n        <div class=\"form-group\">\n          <label for=\"comment\">Comment:</label>\n          <textarea class=\"form-control\" id=\"post\" rows=\"2\" name=\"newComment.comment\" [(ngModel)]=\"newComment.comment\" placeholder=\"Comment\"></textarea>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"name\">Name:</label>\n          <input type=\"text\" class=\"form-control\" id=\"name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n        </div>\n        <p class=\"red\" *ngFor=\"let flash of commentFlash\">{{flash}}</p>\n        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-info space\" *ngIf=\"user\" (click)=\"likePost(post._id)\">Like!</button>\n      <span *ngIf=\"user\">\n        <button class=\"btn btn-warning space\" *ngIf=\"post.userId == user._id\" (click)=\"delete(post._id)\">Delete</button>\n      </span>\n    </div>\n  </div>\n</body>\n\n<div class=\"chatRow row\">\n  <div class=\"col\"></div>\n  <div *ngIf=\"chatRoom\" class=\"col chatBox\">\n    <div class=\"row\">\n      <div class=\"col\">\n        <h5><span *ngFor=\"let name of chatRoom.names\">{{name}}</span></h5>\n      </div>\n      <div class=\"col-1\">\n        <img (click)=\"minimise()\" src=\"assets/minus.png\" alt=\"minus\">\n      </div>\n      <div class=\"col-2\">\n        <img (click)=\"deleteChat()\" src=\"assets/close.png\" alt=\"close\">\n      </div>\n    </div>\n    <div id=\"text\" class=\"text\">\n      <p *ngFor=\"let message of chatRoom.messages\">{{message.message}}</p>\n    </div>\n    <div class=\"row\">\n      <div class=\"col\">\n        <input class=\"form-control\" type=\"text\" placeholder=\"Say Hi!\" (keypress)=\"instantMessage($event)\" [(ngModel)]=\"newMessage\">\n      </div>\n      <div class=\"col-3 clean\">\n        <button class=\"btn btn-sm btn-primary\" (click)=\"sendMessage()\">Send</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"chats\" id=\"lower\">\n  <div class=\"row\">\n    <div class=\"col\"></div>\n    <div *ngFor=\"let chat of chats\" (click)=\"openChat(chat._id)\" class=\"col chat\">\n      <div>\n        <p>\n          <span *ngFor=\"let name of chat.names\">{{name}} </span>\n        </p>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"users\" class=\"sideBar\">\n  <h3>Users</h3>\n  <div id=\"users\">\n    <div *ngFor=\"let user of users\">\n      <p (click)=\"newChat([user._id, user.name])\">{{user.name}}</p>\n    </div>\n  </div>\n</div>\n\n\n<script>\n  $('#text').ready(function(){\n    $('#text').scrollTop = $('#text').scrollHeight\n  })\n</script>"
+module.exports = "<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO'\n  crossorigin='anonymous'> <!-- Bootstrap -->\n<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> <!-- jQuery -->\n<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy'\n  crossorigin='anonymous'></script> <!-- Bootstrap -->\n\n<body>\n  <div class=\"row\">\n    <div class=\"col-10\">\n      <h2>Post a message on the wall</h2>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-warning\" (click)=\"sendSocket()\">Test Socket</button>\n      <button class=\"btn btn-primary\" *ngIf=\"!user\" [routerLink]=\"['/login']\">Log In</button>\n      <button class=\"btn btn-danger\" *ngIf=\"user\" (click)=\"logout()\">Log Out</button>\n    </div>\n  </div>\n  <form class=\"form\" (submit)=\"newPost()\">\n    <div class=\"form-group\">\n      <label for=\"post\">Post:</label>\n      <textarea class=\"form-control\" id=\"post\" rows=\"3\" name=\"post.post\" [(ngModel)]=\"post.post\" placeholder=\"What's on your mind today?..\"></textarea>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"\">Name:</label>\n      <input *ngIf=\"!user\" type=\"text\" class=\"form-control name\" name=\"post.name\" [(ngModel)]=\"post.name\" placeholder=\"Name\">\n      <input *ngIf=\"user\" type=\"text\" class=\"form-control name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n    </div>\n    <p class=\"red\" *ngFor=\"let flash of postFlash\">{{flash}}</p>\n    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n  </form>\n  <div class=\"post row\" *ngFor=\"let post of posts\">\n    <div class=\"col-9\">\n      <h3>{{post.post}}</h3>\n      <h5><img class=\"thumb\" src=\"assets/thumb-up-icon.png\" alt=\"likes\"> {{post.like_count}}</h5>\n      <h4>{{post.name}} <small> - {{post.date}}</small></h4>\n      <div class=\"comments row\" *ngFor=\"let comment of post.comments\">\n        <div class=\"col-8\">\n          <h5>{{comment.comment}}</h5>\n          <h6>- {{comment.name}}</h6>\n        </div>\n        <div class=\"col\">\n          <button class=\"btn btn-sm btn-warning\" *ngIf=\"user && (comment.userId == user._id || post.userId == user._id)\"\n            (click)=\"removeComment(comment._id)\">Delete</button>\n        </div>\n      </div>\n      <button class=\"btn btn-sm btn-primary\" *ngIf=\"newComment.post_id != post._id && user\" (click)=\"open(post._id)\">Write\n        Comment</button>\n      <form class=\"comment\" *ngIf=\"newComment.post_id == post._id\" (submit)=\"comment()\">\n        <div class=\"form-group\">\n          <label for=\"comment\">Comment:</label>\n          <textarea class=\"form-control\" id=\"post\" rows=\"2\" name=\"newComment.comment\" [(ngModel)]=\"newComment.comment\"\n            placeholder=\"Comment\"></textarea>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"name\">Name:</label>\n          <input type=\"text\" class=\"form-control\" id=\"name\" name=\"user.name\" [(ngModel)]=\"user.name\" disabled>\n        </div>\n        <p class=\"red\" *ngFor=\"let flash of commentFlash\">{{flash}}</p>\n        <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n    <div class=\"col\">\n      <button class=\"btn btn-info space\" *ngIf=\"user\" (click)=\"likePost(post._id)\">Like!</button>\n      <span *ngIf=\"user\">\n        <button class=\"btn btn-warning space\" *ngIf=\"post.userId == user._id\" (click)=\"delete(post._id)\">Delete</button>\n      </span>\n    </div>\n  </div>\n</body>\n\n<div class=\"chatRow row\">\n  <div class=\"col\"></div>\n  <div *ngIf=\"chatRoom && chatRoom.names.length > 0\" class=\"col chatBox\">\n    <div class=\"row\">\n      <div class=\"col\">\n        <h5><span *ngFor=\"let name of chatRoom.names\">{{name}}</span></h5>\n      </div>\n      <div class=\"col-1\">\n        <img (click)=\"minimise()\" src=\"assets/minus.png\" alt=\"minus\">\n      </div>\n      <div class=\"col-2\">\n        <img (click)=\"deleteChat()\" src=\"assets/close.png\" alt=\"close\">\n      </div>\n    </div>\n    <div id=\"text\" class=\"text\">\n      <p *ngFor=\"let message of chatRoom.messages\">{{message.message}}</p>\n    </div>\n    <div class=\"row\">\n      <form class=\"form-inline\" (submit)=\"sendMessage()\">\n        <div class=\"form-group mx-sm-3 mb-2\">\n            <input class=\"form-control\" name=\"newMessage\" type=\"text\" placeholder=\"Say Hi!\" [(ngModel)]=\"newMessage\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-primary mb-2\">Send</button>\n      </form>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"chats\" id=\"lower\">\n  <div class=\"row\">\n    <div class=\"col\"></div>\n    <div *ngFor=\"let chat of chats\" (click)=\"openChat(chat._id)\" class=\"col chat\">\n      <div>\n        <p>\n          <span *ngFor=\"let name of chat.names\">{{name}} </span>\n        </p>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"users\" class=\"sideBar\">\n  <h3>Users</h3>\n  <div id=\"users\">\n    <div *ngFor=\"let user of users\">\n      <p (click)=\"newChat([user._id, user.name])\">{{user.name}}</p>\n    </div>\n  </div>\n</div>\n\n\n<script>\n  $('#text').ready(function () {\n    $('#text').scrollTop = $('#text').scrollHeight\n  })\n</script>"
 
 /***/ }),
 
@@ -257,7 +257,11 @@ var HomeComponent = /** @class */ (function () {
             comment: "",
             name: ""
         };
-        this.chatRoom = null;
+        this.chatRoom = {
+            messages: [],
+            names: [],
+            id: ""
+        };
         this.commentFlash = [];
         this.postFlash = [];
         this.newMessage = "";
@@ -285,12 +289,9 @@ var HomeComponent = /** @class */ (function () {
             if (data["message"] == "Success") {
                 _this.getChats(_this.user['_id']);
                 _this.openChat(data['data']['_id']);
+                _this.openChat(data['data']['_id']);
+                //this.chatRoom.messages.push(this.newMessage+" - "+this.user['name'])
                 _this.newMessage = "";
-                _this.chatRoom = {
-                    messages: data['data']['messages'],
-                    names: data['data']['names'],
-                    id: data['data']['_id']
-                };
             }
         });
     };
@@ -333,12 +334,32 @@ var HomeComponent = /** @class */ (function () {
         });
     };
     HomeComponent.prototype.openChat = function (id) {
-        this._httpService.openChat(id);
-        this.chatRoom = this._httpService.chatRoom;
-        console.log(this.chatRoom);
+        if (this.chatRoom.id == id) {
+            this.chatRoom.messages = [];
+            this.chatRoom.names = [];
+            this.chatRoom.id = "";
+        }
+        else {
+            for (var _i = 0, _a = this.chats; _i < _a.length; _i++) {
+                var chat = _a[_i];
+                if (chat._id == id) {
+                    this.chatRoom.messages = chat.messages;
+                    this.chatRoom.names = chat.names;
+                    this.chatRoom.id = chat._id;
+                }
+            }
+        }
+        //this._httpService.openChat(id)
+        //this.chatRoom.messages = this._httpService.chatRoom.messages
+        //this.chatRoom.names = this._httpService.chatRoom.names
+        //this.chatRoom.id = this._httpService.chatRoom.id
     };
     HomeComponent.prototype.minimise = function () {
-        this.chatRoom = null;
+        this.chatRoom = {
+            messages: [],
+            names: [],
+            id: ""
+        };
     };
     HomeComponent.prototype.deleteChat = function () {
         var _this = this;
@@ -348,7 +369,11 @@ var HomeComponent = /** @class */ (function () {
                 //console.log(data)
                 if (data["message"] == "Success") {
                     _this.getChats(_this.user["_id"]);
-                    _this.chatRoom = null;
+                    _this.chatRoom = {
+                        messages: [],
+                        names: [],
+                        id: ""
+                    };
                 }
             });
         }
@@ -515,7 +540,11 @@ var HttpService = /** @class */ (function () {
     function HttpService(_http, sService) {
         this._http = _http;
         this.sService = sService;
-        this.chatRoom = null;
+        this.chatRoom = {
+            messages: [],
+            names: [],
+            id: ""
+        };
         this.messages = sService
             .connect().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             return response;
@@ -525,32 +554,18 @@ var HttpService = /** @class */ (function () {
         });
     }
     HttpService.prototype.openChat = function (id) {
-        if (this.chatRoom) {
-            if (this.chatRoom['id'] == id) {
-                this.chatRoom = null;
-            }
-            else {
-                for (var _i = 0, _a = this.chats; _i < _a.length; _i++) {
-                    var chat = _a[_i];
-                    if (chat._id == id) {
-                        this.chatRoom = {
-                            messages: chat.messages,
-                            names: chat.names,
-                            id: chat._id
-                        };
-                    }
-                }
-            }
+        if (this.chatRoom.id == id) {
+            this.chatRoom.messages = [];
+            this.chatRoom.names = [];
+            this.chatRoom.id = "";
         }
         else {
-            for (var _b = 0, _c = this.chats; _b < _c.length; _b++) {
-                var chat = _c[_b];
+            for (var _i = 0, _a = this.chats; _i < _a.length; _i++) {
+                var chat = _a[_i];
                 if (chat._id == id) {
-                    this.chatRoom = {
-                        messages: chat.messages,
-                        names: chat.names,
-                        id: chat._id
-                    };
+                    this.chatRoom.messages = chat.messages;
+                    this.chatRoom.names = chat.names;
+                    this.chatRoom.id = chat._id;
                 }
             }
         }
@@ -573,14 +588,16 @@ var HttpService = /** @class */ (function () {
         var _this = this;
         var x = this._http.get("/all/chats/" + id);
         x.subscribe(function (data) {
-            _this.chats = data["data"];
-            for (var _i = 0, _a = _this.chats; _i < _a.length; _i++) {
-                var chat = _a[_i];
-                chat['names'] = [];
-                for (var _b = 0, _c = chat['userNames']; _b < _c.length; _b++) {
-                    var name_1 = _c[_b];
-                    if (name_1 != _this.user['name']) {
-                        chat['names'].push(name_1);
+            if (data["message"] == "Success") {
+                _this.chats = data["data"];
+                for (var _i = 0, _a = _this.chats; _i < _a.length; _i++) {
+                    var chat = _a[_i];
+                    chat['names'] = [];
+                    for (var _b = 0, _c = chat['userNames']; _b < _c.length; _b++) {
+                        var name_1 = _c[_b];
+                        if (name_1 != _this.user['name']) {
+                            chat['names'].push(name_1);
+                        }
                     }
                 }
             }
