@@ -12,6 +12,7 @@
       <h2>Post a message on the wall</h2>
     </div>
     <div class="col">
+      <button class="btn btn-warning" (click)="sendSocket()" >Test Socket</button>
       <button class="btn btn-primary" *ngIf="!user" [routerLink]="['/login']">Log In</button>
       <button class="btn btn-danger" *ngIf="user" (click)="logout()">Log Out</button>
     </div>
@@ -33,7 +34,7 @@
     <div class="col-9">
       <h3>{{post.post}}</h3>
       <h5><img class="thumb" src="assets/thumb-up-icon.png" alt="likes"> {{post.like_count}}</h5>
-      <h4>{{post.name}} <small>{{post.created_at}}</small></h4>
+      <h4>{{post.name}} <small> - {{post.date}}</small></h4>
       <div class="comments row" *ngFor="let comment of post.comments">
         <div class="col-8">
           <h5>{{comment.comment}}</h5>
@@ -85,7 +86,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <input class="form-control" type="text" placeholder="Say Hi!" [(ngModel)]="newMessage">
+        <input class="form-control" type="text" placeholder="Say Hi!" (keypress)="instantMessage($event)" [(ngModel)]="newMessage">
       </div>
       <div class="col-3 clean">
         <button class="btn btn-sm btn-primary" (click)="sendMessage()">Send</button>
@@ -97,8 +98,8 @@
 <div *ngIf="chats" id="lower">
   <div class="row">
     <div class="col"></div>
-    <div *ngFor="let chat of chats" class="col chat">
-      <div (click)="openChat(chat._id)">
+    <div *ngFor="let chat of chats" (click)="openChat(chat._id)" class="col chat">
+      <div>
         <p>
           <span *ngFor="let name of chat.names">{{name}} </span>
         </p>

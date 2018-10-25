@@ -8,7 +8,7 @@ import { HttpService } from '../http.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _httpService: HttpService) { }
+  constructor(private _httpService: HttpService) {}
 
   user = this._httpService.user
 
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     comment: "",
     name: ""
   }
-
+  sub: any;
   chatRoom = null;
 
   commentFlash = []
@@ -39,12 +39,29 @@ export class HomeComponent implements OnInit {
   newMessage = ""
 
   ngOnInit() {
+    this.sub = this._httpService.subscription;
+
     this.getPosts()
     if(this.user){
       this.getUsers(this.user['_id'])
       this.getChats(this.user['_id'])
     }
   }
+
+  sendSocket(){
+    this._httpService.testSocket("test")
+  }
+
+  sendInstantMessage(data){
+    //console.log(data)
+    
+    this._httpService.instantMessage({id: this.chatRoom["id"], data: data.key})
+  }
+
+
+
+
+
 
   sendMessage(){
     let observable = this._httpService.sendMessage({newMessage: (this.newMessage+" - "+this.user['name']), chatId: this.chatRoom['id']})
@@ -66,7 +83,7 @@ export class HomeComponent implements OnInit {
   getChats(id){
     let observable = this._httpService.getChats(id)
     observable.subscribe(data => {
-      //console.log(data)
+      console.log("Winner", data)
       if(data["message"] == "Success"){
         this.chats = data["data"]
         for(let chat of this.chats){
@@ -99,31 +116,9 @@ export class HomeComponent implements OnInit {
   }
 
   openChat(id){
-    if(this.chatRoom){
-      if(this.chatRoom['id'] == id){
-        this.chatRoom = null
-      } else {
-        for(let chat of this.chats){
-          if(chat._id == id){
-            this.chatRoom = {
-              messages: chat.messages,
-              names: chat.names,
-              id: chat._id
-            }
-          }
-        }
-      }
-    } else {
-      for(let chat of this.chats){
-        if(chat._id == id){
-          this.chatRoom = {
-            messages: chat.messages,
-            names: chat.names,
-            id: chat._id
-          }
-        }
-      }
-    }
+    this._httpService.openChat(id)
+    this.chatRoom = this._httpService.chatRoom
+    console.log(this.chatRoom)
   }
 
   minimise(){
@@ -188,6 +183,14 @@ export class HomeComponent implements OnInit {
         this.posts = data["data"]
         for(let post of this.posts){
           post['like_count'] = post['likes'].length
+          let d = new Date(post['created_at']);
+          let hour = d.getHours()
+          let x = "am"
+          if(hour > 12){
+            x = "pm"
+            hour -= 12
+          }
+          post['date'] = d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+" "+hour+":"+d.getMinutes()+" "+x
         }
       }
     })

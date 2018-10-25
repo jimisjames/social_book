@@ -1,16 +1,75 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {SocketService} from './socket.service';
+import {Observable, Subject} from 'rxjs';
+import { map } from 'rxjs/operators';﻿
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class HttpService {
+  
+  messages: Subject<any>;
+  user: Object
+  subscription;
+  chats;
+  chatRoom = null;
 
   constructor(
     private _http: HttpClient,
-  ) { }
+    private sService: SocketService
+  ) {
+    this.messages = <Subject<any>>sService
+      .connect().pipe(
+        map((response: any): any => {
+          return response
+        })
+      )
 
-  user: Object
+    this.subscription = this.messages.subscribe(data => {
+      console.log(data)
+    })
+  }
+
+  openChat(id){
+    if(this.chatRoom){
+      if(this.chatRoom['id'] == id){
+        this.chatRoom = null
+      } else {
+        for(let chat of this.chats){
+          if(chat._id == id){
+            this.chatRoom = {
+              messages: chat.messages,
+              names: chat.names,
+              id: chat._id
+            }
+          }
+        }
+      }
+    } else {
+      for(let chat of this.chats){
+        if(chat._id == id){
+          this.chatRoom = {
+            messages: chat.messages,
+            names: chat.names,
+            id: chat._id
+          }
+        }
+      }
+    }
+    console.log(this.chats)
+    console.log(this.chatRoom)
+  }
+
+  testSocket(msg){
+    this.messages.next(msg)
+  }
+
+  instantMessage(data){
+    this.messages.next(data)
+  }
 
   deleteChat(id){
     return this._http.delete("/chat/" +id)
@@ -21,7 +80,18 @@ export class HttpService {
   }
 
   getChats(id){
-    return this._http.get("/all/chats/"+id)
+    let x = this._http.get("/all/chats/"+id)
+    x.subscribe(data => {
+      this.chats = data["data"]
+      for(let chat of this.chats){
+        chat['names'] = []
+        for(let name of chat['userNames'])
+          if(name != this.user['name']){
+            chat['names'].push(name)
+        }
+      }
+    })
+    return x
   }
 
   newChat(data){

@@ -18,13 +18,13 @@ app.all("*", (req,res,next) => {
     res.sendFile(path.resolve("./public/dist/public/index.html"))   //internal routing
 });
 
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
 
     console.log("********* win *************")
 
-    socket.on('message', (msg) => { 
-        console.log(msg)
-        io.emit('message', {type:'new-message', text: msg});
+    socket.on('instantMessage', (data) => { 
+        console.log(data)
+        io.emit('instantMessage', data);
     });
 
 
